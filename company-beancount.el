@@ -27,6 +27,7 @@
     (candidates
      (remove-if-not
       (lambda (c) (fuzzy-word-match arg c))
-      (get-all-postings)))))
+      (get-all-postings)))
+    (sorted t)))
 
 (provide 'company-beancount)
