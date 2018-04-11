@@ -1,4 +1,3 @@
-(require 'cl-lib)
 (require 'company)
 
 (defun regexp-filter (regexp list)
@@ -7,7 +6,7 @@
     (dolist (string list)
       (when (string-match regexp string)
 	(setq new (cons string new))))
-    (nreverse new)))
+    new))
 
 (defun get-all-postings ()
   "Get all paragraphs containing YYYY-MM-DD in them"
@@ -21,12 +20,12 @@
 
 (defun company-beancount-backend (command &optional arg &rest ignored)
   (interactive (list 'interactive))
-  (cl-case command
+  (case command
     (interactive (company-begin-backend 'company-beancount-backend))
     (prefix (and (bound-and-true-p beancount-mode)
                 (thing-at-point 'line t)))
     (candidates
-    (cl-remove-if-not
+     (remove-if-not
       (lambda (c) (fuzzy-word-match arg c))
       (get-all-postings)))))
 
