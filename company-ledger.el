@@ -1,10 +1,10 @@
-;;; company-ledger.el --- Transaction Auto-Completion for Beancount & other Ledger-Likes
+;;; company-ledger.el --- Transaction Auto-Completion for Ledger & Friends
 
 ;; Copyright (C) 2018 Debanjum Singh Solanky
 
 ;; Author: Debanjum Singh Solanky <debanjum AT gmail DOT com>
-;; Description: Transaction auto-completion for beancount & other ledger-likes
-;; Keywords: ledger, beancount, company, auto-complete
+;; Description: Transaction auto-completion for ledger & friends
+;; Keywords: abbrev, matching, auto-complete, beancount, ledger, company
 ;; Version: 0.1.0
 ;; Package-Requires: ((company "0.8.0"))
 ;; URL: https://github.com/debanjum/company-ledger
@@ -30,24 +30,23 @@
 
 ;;; Commentary:
 ;;
-;; Detailed description
+;;  Detailed Behavior
 ;; --------------------
-;; Provides in-place transaction auto-completion based on words on current line
-;; the candidate transactions are sorted by most recent transaction
-;; the words on the current line can be partial and in any order
-
-;; See the README for more details.
+;; - Provides in-place transaction auto-completion based on words on current line
+;; - The candidate transactions are sorted by most recent transaction
+;; - The words on the current line can be partial and in any order
 
 ;;; Acknowledgments
 
 ;; Sixty North's blog entry http://sixty-north.com/blog/writing-the-simplest-emacs-company-mode-backend.html
 ;; provided the push required to finally write this company mode
 
+(require 'cl-lib)
 (require 'company)
 
 ;;; Code:
 
-(defun regexp-filter (regexp list)
+(defun company-ledger--regexp-filter (regexp list)
   "Use REGEXP to filter LIST of strings."
   (let (new)
     (dolist (string list)
@@ -55,13 +54,14 @@
 	(setq new (cons string new))))
     new))
 
-(defun get-all-postings ()
+(defun company-ledger--get-all-postings ()
   "Get all paragraphs in buffer containing YYYY[-/]MM[-/]DD in them."
-  (regexp-filter "[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]"
-		 (mapcar #'(lambda (s) (substring s 1))
-			 (split-string (buffer-string) "^$" t))))
+  (company-ledger--regexp-filter
+   "[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]"
+   (mapcar #'(lambda (s) (substring s 1))
+	   (split-string (buffer-string) "^$" t))))
 
-(defun fuzzy-word-match (prefix candidate)
+(defun company-ledger--fuzzy-word-match (prefix candidate)
   "Return true if each (partial) word in PREFIX is also in CANDIDATE."
   (eq nil
       (memq nil
@@ -71,8 +71,8 @@
 
 ;;;###autoload
 (defun company-ledger-backend (command &optional arg &rest ignored)
-  "`company-mode' completion back-end for `ledger-mode', `beancount-mode' etc.
-Provide completion info according to COMMAND and ARG.  IGNORED, not used."
+  "Company back-end for ledger, beancount and other ledger-like modes.
+Provide completion info based on COMMAND and ARG.  IGNORED, not used."
   (interactive (list 'interactive))
   (case command
     (interactive (company-begin-backend 'company-ledger-backend))
@@ -82,9 +82,9 @@ Provide completion info according to COMMAND and ARG.  IGNORED, not used."
                 (thing-at-point 'line t)))
 
     (candidates
-     (remove-if-not
-      (lambda (c) (fuzzy-word-match arg c))
-      (get-all-postings)))
+     (cl-remove-if-not
+      (lambda (c) (company-ledger--fuzzy-word-match arg c))
+      (company-ledger--get-all-postings)))
     (sorted t)))
 
 (provide 'company-ledger)
