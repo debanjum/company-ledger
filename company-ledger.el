@@ -41,10 +41,10 @@
 ;; Sixty North's blog entry http://sixty-north.com/blog/writing-the-simplest-emacs-company-mode-backend.html
 ;; provided the push required to finally write this company mode
 
+;;; Code:
+
 (require 'cl-lib)
 (require 'company)
-
-;;; Code:
 
 (defun company-ledger--regexp-filter (regexp list)
   "Use REGEXP to filter LIST of strings."
@@ -69,16 +69,26 @@
 	     #'(lambda (pre) (string-match-p (regexp-quote pre) candidate))
 	     (split-string prefix)))))
 
+(defun company-ledger--next-line-empty-p ()
+  "Return true if next line empty else false."
+  (save-excursion
+    (beginning-of-line)
+    (forward-line 1)
+    (or (looking-at "[[:space:]]*$")
+	(eolp)
+	(eobp))))
+
 ;;;###autoload
 (defun company-ledger-backend (command &optional arg &rest ignored)
   "Company back-end for ledger, beancount and other ledger-like modes.
 Provide completion info based on COMMAND and ARG.  IGNORED, not used."
   (interactive (list 'interactive))
-  (case command
+  (cl-case command
     (interactive (company-begin-backend 'company-ledger-backend))
 
     (prefix (and (or (bound-and-true-p beancount-mode)
 		     (derived-mode-p 'ledger-mode))
+		 (company-ledger--next-line-empty-p)
                 (thing-at-point 'line t)))
 
     (candidates
