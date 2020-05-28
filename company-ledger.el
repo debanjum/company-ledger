@@ -51,7 +51,7 @@
   (let (new)
     (dolist (string list)
       (when (string-match regexp string)
-	(setq new (cons string new))))
+        (setq new (cons string new))))
     new))
 
 (defun company-ledger--get-all-postings ()
@@ -59,15 +59,15 @@
   (company-ledger--regexp-filter
    "[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]"
    (mapcar #'(lambda (s) (substring s 1))
-	   (split-string (buffer-string) "^$" t))))
+           (split-string (buffer-string) "^$" t))))
 
 (defun company-ledger--fuzzy-word-match (prefix candidate)
   "Return true if each (partial) word in PREFIX is also in CANDIDATE."
   (eq nil
       (memq nil
-	    (mapcar
-	     #'(lambda (pre) (string-match-p (regexp-quote pre) candidate))
-	     (split-string prefix)))))
+            (mapcar
+             #'(lambda (pre) (string-match-p (regexp-quote pre) candidate))
+             (split-string prefix)))))
 
 (defun company-ledger--next-line-empty-p ()
   "Return true if next line empty else false."
@@ -75,8 +75,8 @@
     (beginning-of-line)
     (forward-line 1)
     (or (looking-at "[[:space:]]*$")
-	(eolp)
-	(eobp))))
+        (eolp)
+        (eobp))))
 
 ;;;###autoload
 (defun company-ledger-backend (command &optional arg &rest ignored)
@@ -87,8 +87,8 @@ Provide completion info based on COMMAND and ARG.  IGNORED, not used."
     (interactive (company-begin-backend 'company-ledger-backend))
 
     (prefix (and (or (bound-and-true-p beancount-mode)
-		     (derived-mode-p 'ledger-mode))
-		 (company-ledger--next-line-empty-p)
+                     (derived-mode-p 'ledger-mode))
+                 (company-ledger--next-line-empty-p)
                 (thing-at-point 'line t)))
 
     (candidates
