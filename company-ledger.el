@@ -1,4 +1,4 @@
-;;; company-ledger.el --- Transaction Auto-Completion for Ledger & Friends
+;;; company-ledger.el --- Fuzzy Transaction Auto-Completion for Ledger & Friends
 
 ;; Copyright (C) 2018 Debanjum Singh Solanky
 
@@ -33,8 +33,8 @@
 ;;  Detailed Behavior
 ;; --------------------
 ;; - Provides in-place transaction auto-completion based on words on current line
-;; - The candidate transactions are sorted by most recent transaction
 ;; - The words on the current line can be partial and in any order
+;; - The candidate transactions are sorted by most recent transaction
 
 ;;; Acknowledgments
 
@@ -81,6 +81,7 @@
 ;;;###autoload
 (defun company-ledger-backend (command &optional arg &rest ignored)
   "Company back-end for ledger, beancount and other ledger-like modes.
+  "Fuzzy company back-end for ledger, beancount and other ledger-like modes.
 Provide completion info based on COMMAND and ARG.  IGNORED, not used."
   (interactive (list 'interactive))
   (cl-case command
