@@ -79,13 +79,12 @@
         (eobp))))
 
 ;;;###autoload
-(defun company-ledger-backend (command &optional arg &rest ignored)
-  "Company back-end for ledger, beancount and other ledger-like modes.
+(defun company-ledger (command &optional arg &rest ignored)
   "Fuzzy company back-end for ledger, beancount and other ledger-like modes.
 Provide completion info based on COMMAND and ARG.  IGNORED, not used."
   (interactive (list 'interactive))
   (cl-case command
-    (interactive (company-begin-backend 'company-ledger-backend))
+    (interactive (company-begin-backend 'company-ledger))
 
     (prefix (and (or (bound-and-true-p beancount-mode)
                      (derived-mode-p 'ledger-mode))
