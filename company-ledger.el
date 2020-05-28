@@ -1,9 +1,9 @@
-;;; company-ledger.el --- Fuzzy Transaction Auto-Completion for Ledger & Friends
+;;; company-ledger.el --- Fuzzy Auto-Completion for Ledger & Friends
 
-;; Copyright (C) 2018 Debanjum Singh Solanky
+;; Copyright (C) 2018-2020 Debanjum Singh Solanky
 
 ;; Author: Debanjum Singh Solanky <debanjum AT gmail DOT com>
-;; Description: Transaction auto-completion for ledger & friends
+;; Description: Fuzzy auto-completion for ledger & friends
 ;; Keywords: abbrev, matching, auto-complete, beancount, ledger, company
 ;; Version: 0.1.0
 ;; Package-Requires: ((company "0.8.0"))
@@ -32,14 +32,10 @@
 ;;
 ;;  Detailed Behavior
 ;; --------------------
-;; - Provides in-place transaction auto-completion based on words on current line
+;; - Provides in-place auto-completion based on words on current line
 ;; - The words on the current line can be partial and in any order
-;; - The candidate transactions are sorted by most recent transaction
-
-;;; Acknowledgments
-
-;; Sixty North's blog entry http://sixty-north.com/blog/writing-the-simplest-emacs-company-mode-backend.html
-;; provided the push required to finally write this company mode
+;; - The candidate entities are reverse sorted by location in file
+;; - Candidates are paragraphs starting with YYYY[-/]MM[-/]DD
 
 ;;; Code:
 
