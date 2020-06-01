@@ -58,7 +58,7 @@
            (split-string (buffer-string) "^$" t))))
 
 (defun company-ledger--fuzzy-word-match (prefix candidate)
-  "Return true if each (partial) word in PREFIX is also in CANDIDATE."
+  "Return non-nil if each (partial) word in PREFIX is also in CANDIDATE."
   (eq nil
       (memq nil
             (mapcar
@@ -66,7 +66,7 @@
              (split-string prefix)))))
 
 (defun company-ledger--next-line-empty-p ()
-  "Return true if next line empty else false."
+  "Return non-nil if next line empty else false."
   (save-excursion
     (beginning-of-line)
     (forward-line 1)
