@@ -24,7 +24,7 @@ Demo
 Installation
 ------------
 
-Just copy `company-ledger.el`_ to a valid location in your Emacs `load-path`_
+Just copy `company-ledger.el`_ to a valid location in your Emacs `load-path <https://www.emacswiki.org/emacs/LoadPath>`_
 
 
 Sample Setup
