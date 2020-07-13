@@ -1,4 +1,4 @@
-;;; company-ledger.el --- Fuzzy Auto-Completion for Ledger & Friends
+;;; company-ledger.el --- Fuzzy Auto-Completion for Ledger & Friends -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018-2020 Debanjum Singh Solanky
 
@@ -6,7 +6,7 @@
 ;; Description: Fuzzy auto-completion for ledger & friends
 ;; Keywords: abbrev, matching, auto-complete, beancount, ledger, company
 ;; Version: 0.1.0
-;; Package-Requires: ((company "0.8.0"))
+;; Package-Requires: ((emacs "24.3") (cl-lib "0.5") (company "0.8.0"))
 ;; URL: https://github.com/debanjum/company-ledger
 
 ;; This file is NOT part of GNU Emacs.
@@ -54,7 +54,7 @@
   "Get all paragraphs in buffer containing YYYY[-/]MM[-/]DD in them."
   (company-ledger--regexp-filter
    "[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]"
-   (mapcar #'(lambda (s) (substring s 1))
+   (mapcar (lambda (s) (substring s 1))
            (split-string (buffer-string) "^$" t))))
 
 (defun company-ledger--fuzzy-word-match (prefix candidate)
@@ -62,7 +62,7 @@
   (eq nil
       (memq nil
             (mapcar
-             #'(lambda (pre) (string-match-p (regexp-quote pre) candidate))
+             (lambda (pre) (string-match-p (regexp-quote pre) candidate))
              (split-string prefix)))))
 
 (defun company-ledger--next-line-empty-p ()
