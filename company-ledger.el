@@ -53,7 +53,7 @@
 (defun company-ledger--get-all-postings ()
   "Get all paragraphs in buffer containing YYYY[-/]MM[-/]DD in them."
   (company-ledger--regexp-filter
-   "[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]"
+   "[0-9][0-9][0-9][0-9][-/][0-9][0-9][-/][0-9][0-9]"
    (mapcar (lambda (s) (substring s 1))
            (split-string (buffer-string) "^$" t))))
 
