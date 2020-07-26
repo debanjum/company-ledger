@@ -1,8 +1,16 @@
 ==============
 Company Ledger
 ==============
+.. image:: https://melpa.org/packages/company-ledger-badge.svg
+  :target: https://melpa.org/#/company-ledger
 
-Fuzzy Auto-Completion for Beancount & other Ledger-Likes with Company Mode
+Fuzzy auto-completion for Beancount & other Ledger-likes with Company Mode
+
+
+Installation
+------------
+
+Install `company-ledger <https://melpa.org/#/company-ledger>`_ from MELPA
 
 
 Usage
@@ -21,44 +29,31 @@ Demo
 .. image:: ./examples/demo.gif
 
 
-Installation
-------------
+Setup
+-----
 
-Just copy `company-ledger.el`_ to a valid location in your Emacs `load-path <https://www.emacswiki.org/emacs/LoadPath>`_
+1. Make sure `company-mode`_ is already installed
+2. Though not strictly required, you'd mostly want `ledger-mode`_ or `beancount-mode`_ also setup
 
-
-Sample Setup
-------------
-
-Sets up `beancount <https://bitbucket.org/blais/beancount>`_, `company <https://company-mode.github.io/>`_ and `company-ledger <https://github.com/debanjum/company-ledger>`_
-
-Sample setup assumes:
-  1. :code:`~/.emacs.d/lisp/` is in your Emacs :code:`load-path`
-  2. `beancount.el <https://bitbucket.org/blais/beancount/src/default/editors/emacs/beancount.el>`_ and `company-ledger.el`_ are in :code:`~/.emacs.d/lisp/`
-  3. `use-package <https://jwiegley.github.io/use-package/>`_ is managing your emacs configuration
+Minimal
+=======
 
 .. code:: lisp
+   (with-eval-after-load 'company
+     (add-to-list 'company-backends 'company-ledger))
 
-    ;; Company mode for Completion
-    (use-package company :ensure t :defer t :diminish company-mode)
+Use-Package
+===========
 
-    ;; Custom Beancount Company backend
-    (use-package company-ledger
-      :load-path "~/.emacs.d/lisp/company-ledger.el"
-      :ensure company
-      :init
-      (with-eval-after-load 'company
-          (add-to-list 'company-backends 'company-ledger)))
-
-    ;; Beancount Minor Mode
-    ;; Get beancount.el from https://bitbucket.org/blais/beancount
-    (use-package beancount
-      :load-path "~/.emacs.d/lisp/beancount.el"
-      :config (progn (add-hook 'beancount-mode-hook 'company-mode)))
-
-    (add-to-list 'auto-mode-alist '("\\.bean\\'" . beancount-mode))
+.. code:: lisp
+   (use-package company-ledger
+     :ensure company
+     :init
+     (with-eval-after-load 'company
+       (add-to-list 'company-backends 'company-ledger)))
 
 
 .. _sample beancount: ./examples/otzi.beancount
-.. _usage demo: ./examples/demo.gif
-.. _company-ledger.el: ./company-ledger.el
+.. _company-mode: https://company-mode.github.io
+.. _ledger-mode: https://github.com/ledger/ledger-mode
+.. _beancount-mode: https://bitbucket.org/blais/beancount/src/default/editors/emacs/beancount.el
