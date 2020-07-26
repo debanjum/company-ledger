@@ -39,21 +39,23 @@ Minimal
 =======
 
 .. code:: lisp
-   (with-eval-after-load 'company
-     (add-to-list 'company-backends 'company-ledger))
+
+ (with-eval-after-load 'company
+   (add-to-list 'company-backends 'company-ledger))
 
 Use-Package
 ===========
 
-.. code:: lisp
-   (use-package company-ledger
-     :ensure company
-     :init
-     (with-eval-after-load 'company
-       (add-to-list 'company-backends 'company-ledger)))
+.. code:: elisp
+
+ (use-package company-ledger
+   :ensure company
+   :init
+   (with-eval-after-load 'company
+     (add-to-list 'company-backends 'company-ledger)))
 
 
 .. _sample beancount: ./examples/otzi.beancount
 .. _company-mode: https://company-mode.github.io
 .. _ledger-mode: https://github.com/ledger/ledger-mode
-.. _beancount-mode: https://bitbucket.org/blais/beancount/src/default/editors/emacs/beancount.el
+.. _beancount-mode: https://github.com/beancount/beancount/blob/master/editors/emacs/beancount.el
