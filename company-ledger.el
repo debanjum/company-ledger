@@ -63,6 +63,9 @@
 (defconst company-ledger-date-regexp "^[0-9]\\{4\\}[-/][0-9]\\{2\\}[-/][0-9]\\{2\\}"
   "A regular expression to match lines beginning with dates.")
 
+(defconst company-ledger-empty-line-regexp "^[ \t]*$"
+  "A regular expression to match empty lines.")
+
 (defun company-ledger--regexp-filter (regexp list)
   "Use REGEXP to filter LIST of strings."
   (let (new)
@@ -76,7 +79,7 @@
   (company-ledger--regexp-filter
    company-ledger-date-regexp
    (mapcar (lambda (s) (substring s 1))
-           (split-string (buffer-string) "^$" t))))
+           (split-string (buffer-string) company-ledger-empty-line-regexp t))))
 
 (defun company-ledger--fuzzy-word-match (prefix candidate)
   "Return non-nil if each (partial) word in PREFIX is also in CANDIDATE."
@@ -91,7 +94,7 @@
   (save-excursion
     (beginning-of-line)
     (forward-line 1)
-    (or (looking-at "[[:space:]]*$")
+    (or (looking-at company-ledger-empty-line-regexp)
         (eolp)
         (eobp))))
 
