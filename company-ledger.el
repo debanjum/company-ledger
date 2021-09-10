@@ -97,19 +97,20 @@
   "Fuzzy company back-end for ledger, beancount and other ledger-like modes.
 Provide completion info based on COMMAND and ARG.  IGNORED, not used."
   (interactive (list 'interactive))
-  (cl-case command
-    (interactive (company-begin-backend 'company-ledger))
+  (pcase command
+    (`interactive (company-begin-backend 'company-ledger))
 
-    (prefix (and (or (bound-and-true-p beancount-mode)
+    (`prefix (and (or (bound-and-true-p beancount-mode)
                      (derived-mode-p 'ledger-mode))
                  (company-ledger--next-line-empty-p)
                 (thing-at-point 'line t)))
 
-    (candidates
+    (`candidates
      (cl-remove-if-not
       (lambda (c) (company-ledger--fuzzy-word-match arg c))
       (company-ledger--get-all-postings)))
-    (sorted t)))
+
+    (`sorted t)))
 
 (provide 'company-ledger)
 ;;; company-ledger.el ends here
