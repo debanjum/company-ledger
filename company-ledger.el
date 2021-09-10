@@ -60,6 +60,9 @@
 (require 'cl-lib)
 (require 'company)
 
+(defconst company-ledger-date-regexp "^[0-9]\\{4\\}[-/][0-9]\\{2\\}[-/][0-9]\\{2\\}"
+  "A regular expression to match lines beginning with dates.")
+
 (defun company-ledger--regexp-filter (regexp list)
   "Use REGEXP to filter LIST of strings."
   (let (new)
@@ -69,9 +72,9 @@
     new))
 
 (defun company-ledger--get-all-postings ()
-  "Get all paragraphs in buffer containing YYYY[-/]MM[-/]DD in them."
+  "Get all paragraphs in buffer starting with dates."
   (company-ledger--regexp-filter
-   "[0-9][0-9][0-9][0-9][-/][0-9][0-9][-/][0-9][0-9]"
+   company-ledger-date-regexp
    (mapcar (lambda (s) (substring s 1))
            (split-string (buffer-string) "^$" t))))
 
