@@ -58,4 +58,4 @@ Use-Package
 .. _sample beancount: ./examples/otzi.beancount
 .. _company-mode: https://company-mode.github.io
 .. _ledger-mode: https://github.com/ledger/ledger-mode
-.. _beancount-mode: https://github.com/beancount/beancount/blob/master/editors/emacs/beancount.el
+.. _beancount-mode: https://github.com/beancount/beancount-mode
